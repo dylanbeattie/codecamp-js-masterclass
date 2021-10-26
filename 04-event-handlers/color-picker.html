@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Color Picker!</title>
+</head>
+<body>
+    <h1 id="my-headline">This is a headline</h1>
+    <color-picker id="my-picker"></color-picker>
+    <script>
+        const picker = document.getElementById('my-picker');
+        picker.addEventListener('colorChange', function(args) {
+            var h1 = document.getElementById('my-headline');
+            h1.style.color = args.color;
+        });
+    </script>
+</body>
+
+

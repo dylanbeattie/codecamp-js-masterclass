@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Handlers!</title>
+</head>
+
+<body>
+    <h1>Method 1: Inline JavaScript (ewwww.)</h1>
+    <a href="#" onmouseover="this.style.color = 'red';" onmouseout="this.style.color = '';">
+        hover over me!</a>
+    <h1>Method 2: Inline Function Calls (ok...)</h1>
+    <a href="#" onmouseover="highlight(this);" onmouseout="clearHighlight(this);">
+        hover over me!</a>
+    <h1>Method 3: OnEvent handlers</h1>
+    <a href="#" id="method3-link">hover over me</a>
+    <h2>Method 4: addEventListener</h2>
+    <a href="#" id="method4-link">hover over me</a>
+    <script>
+        const method4link = document.getElementById('method4-link');
+        method4link.addEventListener('mouseover', function() {
+            this.style.color = 'orange';
+        });
+
+        method4link.addEventListener('mouseout', function() {
+            this.style.color = '';
+        });
+
+
+        const method3link = document.getElementById('method3-link');
+        method3link.onmouseover = highlightMethod3;
+        method3link.onmouseout = clearHighlightMethod3;        
+
+        function highlightMethod3() {
+            console.log(this);
+            this.style.color = 'purple';
+        }
+        
+        function clearHighlightMethod3() {
+            console.log(this);
+            this.style.color = '';
+        }
+
+        function highlight(element) {
+            element.style.color = 'green';
+        }
+        function clearHighlight(element) {
+            element.style.color = '';
+        }
+    </script>
+</body>
+
+</html>
