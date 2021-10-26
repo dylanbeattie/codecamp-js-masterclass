@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Playlists!</title>
+    <link type="text/css" rel="stylesheet" href="playlist.css" />
+</head>
+
+<body>
+    <h4>Playlists</h4>
+    <table>
+        <thead>
+            <tr>
+                <th>Artist</th>
+                <th>Title</th>
+                <th>Album</th>
+                <th>Search</th>
+            </tr>
+        </thead>
+        <tbody id="playlist-body">
+            <!-- TODO: put table rows here! -->
+        </tbody>
+    </table>
+    <form>
+        <p>Add a song to the playlist:</p>
+        <label for="artist-input">Artist:</label>
+        <input type="text" name="artist" id="artist-input" /><br />
+
+        <label for="song-input">Song:</label>
+        <input type="text" name="song" id="song-input" /><br />
+
+        <label for="album-input">Album:</label>
+        <input type="text" name="album" id="album-input" /><br />
+
+        <input type="button" value="Add to Playlist" onclick="addSongToPlaylist(this.form);" />
+    </form>
+
+    <template id="playlist-entry-template">
+        <tr>
+            <td class="artist-td"></td>
+            <td class="song-td"></td>
+            <td class="album-td"></td>
+            <td>
+                <a id="search-link">search</a>
+            </td>
+        </tr>
+    </template>
+    <script>
+        var index = 0;
+        function addSongToPlaylist(form) {
+            let artist = form["artist"].value;
+            let song = form["song"].value;
+            let album = form["album"].value;
+            let query = `${artist} ${song} ${album}`.toLowerCase().replace(' ', '+');
+            let href = 'https://www.google.com/search?q=' + query;
+
+            let template = document.getElementById('playlist-entry-template').content.cloneNode(true);
+            template.querySelector("td.artist-td").innerText = artist;
+//            tableDatas[0].innerText = artist;
+                        // template.getElementById('artist-td').innerText = artist;
+            // template.getElementById('artist-td').id += `-${index}`;
+            template.querySelector('td.song-td').innerText = song;
+            template.querySelector('td.song-td').id += `-${index}`;
+            template.querySelector('td.album-td').innerText = album;
+            template.querySelector('td.album-td').id += `-${index}`;
+            template.getElementById('search-link').setAttribute('href', href);
+            let tbody = document.getElementById('playlist-body');
+            tbody.appendChild(template);
+            index++;
+        }
+    </script>
+</body>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Custom Button</title>
+</head>
+
+<body>
+    <big-red-button id="the-big-red-button">
+        <ul>
+            <li>Do not click this button.</li>
+            <li>If you do bad things will happen.</li>
+        </ul>
+        <h3>Really. Do not click it!</h3>
+        <img style="width: 32px; height: 32px;" slot="button-icon" src="https://www.clipartmax.com/png/middle/171-1712824_icon-warning-red-danger-icon.png" />
+    </big-red-button>
+    <script>
+        class BigRedButtonElement extends HTMLElement {
+            constructor() {
+                super();
+                let template = document.createElement('template');
+                template.innerHTML = `<button style="background-color: red;">
+                    <slot name="button-icon"></slot>
+                    <slot style="font-size: 200%;"></slot>
+                </button>`;
+                let node = template.content.cloneNode(true);
+                this.attachShadow({mode: 'open'}).appendChild(node);
+            }
+        }
+        customElements.define("big-red-button", BigRedButtonElement);
+        document.getElementById('the-big-red-button').addEventListener('click', function() {
+            alert('Bad things happened. WEll done.');
+        })
+    </script>
+</body>
+</html>
