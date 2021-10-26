@@ -1,0 +1,39 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Shadow DOM Exercise</title>
+    <style>
+        h1, p {
+            color: #f00;
+            font-family: italic;
+        }
+    </style>
+    <script>
+        class MyHeadingElement extends HTMLElement {
+            
+            constructor() {
+                super();
+                this.attachShadow({mode: 'open'});
+            }
+            
+            connectedCallback() {
+                this.shadowRoot.innerHTML = '<h1>Custom Heading</h1>';
+            }
+        }
+        customElements.define("my-heading", MyHeadingElement);
+    </script>
+</head>
+
+<body>
+    <h1>This is a normal (non-custom) heading</h1>
+    <p>Here's a page that uses a custom element.</p>
+    <my-heading></my-heading>
+    <hr />
+    <p>The page uses a global CSS rule that makes everything red.</p>
+    <p> Modify this component so that it renders the control
+        using the shadow DOM, so that the component contents do NOT appear in red.</p>
+</body>
+
+</html>
