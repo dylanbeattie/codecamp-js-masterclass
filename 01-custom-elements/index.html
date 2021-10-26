@@ -5,17 +5,16 @@
 <body>
     <h1>Custom Elements</h1>
     <hello-world></hello-world>
-    <hello-world></hello-world>
-    <hello-world></hello-world>
-    <hello-world></hello-world>
-    <hello-world></hello-world>
 </body>
 <script>
     class HelloWorldElement extends HTMLElement {
-        constructor() {
-            super();
-            this.innerHTML = "Hello World!";
+        connectedCallback() {
+            let p = document.createElement("p");
+            p.innerHTML = "Hello World";
+            this.appendChild(p);
         }
+
+
     }
     customElements.define("hello-world", HelloWorldElement);
 </script>
