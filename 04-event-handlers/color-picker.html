@@ -5,16 +5,65 @@
     <meta charset="UTF-8">
     <title>Color Picker!</title>
 </head>
+
 <body>
     <h1 id="my-headline">This is a headline</h1>
-    <color-picker id="my-picker"></color-picker>
+    <color-picker for="my-headline"></color-picker>
+    <p id="my-paragraph">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec odio leo, tempus vel luctus sit
+        amet, ornare et dui. Donec gravida elit neque, eu venenatis ipsum placerat quis. Morbi dignissim dolor eu augue
+        hendrerit vestibulum. Donec viverra maximus ipsum vel fringilla. Integer pellentesque nec lorem sit amet
+        euismod. Donec volutpat fermentum turpis, sed bibendum nisl luctus feugiat. Curabitur laoreet cursus
+        scelerisque. Vivamus tempor sapien et sapien consequat cursus. Aliquam in elit sed velit imperdiet congue ac sit
+        amet mi. Aliquam erat volutpat. Sed id porta risus. Donec turpis diam, rhoncus sed pellentesque nec, blandit vel
+        erat. Etiam faucibus eget tellus in cursus. Nunc in purus vitae velit elementum convallis vitae vitae felis.
+        Donec blandit, ligula sed fringilla dignissim, velit ante maximus orci, at tincidunt arcu ante vitae mi. Aenean
+        gravida nec justo et tincidunt.
+    </p>
+    <color-picker for="my-paragraph"></color-picker>
     <script>
+        class ColorPickerElement extends HTMLElement {
+            constructor() {
+                super();
+                this.attachShadow({ mode: 'open' });
+                let style = document.createElement('style');
+                style.innerHTML = `button { 
+                    width: 24px; height: 24px; border: 1px solid #fff;
+                    border-radius: 16px; cursor: pointer; 
+                } 
+                button:focus { outline: none; }`;
+                this.shadowRoot.appendChild(style);
+            }
+            drawPicker(div) {
+                const picker = this;
+                let colors = ["#50c236", "#16856f", "#efc306", "#025594", "#b51f8f", "#ff6c53", "#a85642"];
+                colors.forEach(color => {
+                    let button = document.createElement('button');
+                    button.style.backgroundColor = color;
+                    button.addEventListener('click', function (clickEvent) {
+                        const colorEvent = new CustomEvent('pick-color', {
+                            bubbles: true,
+                            detail: color
+                        });
+                        picker.dispatchEvent(colorEvent);
+                    });
+                    div.appendChild(button);
+                });
+            }
+
+            connectedCallback() {
+                let container = document.createElement('div');
+                this.drawPicker(container);
+                this.shadowRoot.appendChild(container);
+            }
+        }
+        customElements.define('color-picker', ColorPickerElement);
+
         const picker = document.getElementById('my-picker');
-        picker.addEventListener('colorChange', function(args) {
-            var h1 = document.getElementById('my-headline');
-            h1.style.color = args.color;
+        document.addEventListener('pick-color', function (e) {
+            var pickedColor = e.detail;
+            var whichPickerWasUsed = e.target;
+            var targetElementId = whichPickerWasUsed.getAttribute('for');
+            document.getElementById(targetElementId).style.color = pickedColor;
         });
     </script>
 </body>
-
-
