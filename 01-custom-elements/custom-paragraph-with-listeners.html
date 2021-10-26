@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Custom Elements</title>
+</head>
+
+<body>
+    <p id="test-paragraph" is="word-count">This paragraph has five words.</p>
+    <p is="word-count">This paragraph is a little longer and contains ten words.</p>
+    <p is="word-count">This is the longest paragraph in the document. It contains twenty words. Some of the
+        words are not very interesting.</p>
+    <hr />
+    <button id="change-text-button">Change Text</button>
+    <script>
+        document.getElementById('change-text-button').addEventListener('click', function() {
+            const  p = document.getElementById('test-paragraph');
+            p.innerHTML = "CHANGED";
+            p.updateCount();
+        });
+
+        class WordCountParagraphElement extends HTMLParagraphElement {
+            updateCount = function() {
+                let wordCount = this.innerText.split(/ +/).length;
+                this.title = `${wordCount} words.`;
+            }
+            connectedCallback() {
+                this.updateCount();
+            }
+        }
+        customElements.define('word-count', WordCountParagraphElement, { extends: 'p' });
+    </script>
+</body>
+
+</html>

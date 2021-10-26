@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<head>
+    <title>Custom Elements</title>
+</head>
+<body>
+    <h1>Custom Elements</h1>
+    <hello-world name="Alin"></hello-world>
+    <hello-world name="Cristian"></hello-world>
+    <hello-world name="Beatrice"></hello-world>
+    <hr />
+    <hello-world id="placeholder-greeting"></hello-world>
+    Language? 
+    <select name="language" id="language">
+        <option value="ro">Romanian</option>
+        <option value="en">English</option>
+    </select>
+
+    Who? <input id="greeting-name" />
+    <button id="update-greeting-button">Update</button>
+</body>
+<script>
+
+    var button = document.getElementById('update-greeting-button');
+    button.addEventListener('click', function() {
+        // TODO: read the language value from the select dropdown list
+        const languageSelectElement = document.getElementById('language');
+        const language = languageSelectElement.value;
+        const name = document.getElementById('greeting-name').value;
+        const helloElement = document.getElementById('placeholder-greeting');
+
+        //TODO: set the "lang" attribute on the Hello element.
+        helloElement.setAttribute("name", name);
+        helloElement.setAttribute('language', language);
+    });
+
+    class HelloWorldElement extends HTMLElement {
+        connectedCallback() {
+            this.greetEn(this.getAttribute("name"));
+        }
+
+        greetRo(name) {
+            this.innerHTML = `<p>Salut, ${name || 'Lume'}</p>`;
+        }
+
+        greetEn(name) {
+            this.innerHTML = `<p>Hello ${name || 'World'}</p>`;
+        }
+
+        static get observedAttributes() { 
+            // TODO: add lang to the list of observed attributes
+            return ['name', 'language'];
+        }
+
+        attributeChangedCallback(attributeName, oldValue, newValue) {
+            // todo: if the attributeName = "lang", translate the greeting
+            const name = this.getAttribute('name');
+            const language = this.getAttribute('language');
+            switch(language.toLowerCase()) {
+                case 'ro':
+                    return this.greetRo(name);
+                case 'en':
+                    return this.greetEn(name);
+            }       
+        }
+    }
+    customElements.define("hello-world", HelloWorldElement);
+</script>
+</html>
