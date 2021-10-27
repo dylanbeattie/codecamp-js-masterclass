@@ -10,18 +10,26 @@ export default class TetrisElement extends HTMLElement {
     connectedCallback() {
         let rows = this.getAttribute("rows");
         let cols = this.getAttribute("cols");
-        this.engine = new TetrisEngine(rows,cols);
+        this.engine = new TetrisEngine(rows, cols);
         this.renderer = new Renderer(this.shadowRoot);
 
         //TODO: replace this with proper gameplay
-        this.engine.addBlock(2,4);
+        this.engine.addBlock();
         this.renderer.render(this.engine);
-        document.addEventListener("keypress", this.handleKeypress.bind(this));
+        document.addEventListener("keydown", this.handleKeydown.bind(this));
     }
 
-    handleKeypress(event) {
+    handleKeydown(event) {
+        console.log(event.code);
         switch (event.code) {
+            case "ArrowLeft":
+                this.engine.moveLeft();
+                return this.renderer.update(this.engine);
+            case "ArrowRight":
+                this.engine.moveRight();
+                return this.renderer.update(this.engine);
             case "Space":
+                this.engine.fall();
                 return this.renderer.update(this.engine);
         }
     }

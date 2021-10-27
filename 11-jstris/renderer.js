@@ -32,7 +32,7 @@ rowIndex >  [ span, span, span, span ]
             let rowDiv = html.element('div');
             let rowSpans = new Array(); 
             for(let col = 0; col < engine.cols; col++) {
-                let span =html.element('span');
+                let span = html.element('span');
                 rowDiv.appendChild(span);
                 rowSpans.push(span);
             }
@@ -46,7 +46,8 @@ rowIndex >  [ span, span, span, span ]
         let spans = this.root.querySelectorAll("div.tetris-grid div span");
         spans.forEach(span => span.className = null);
         // Then: highlight the cells with blocks in them
-        engine.blocks.forEach(block => block.cells.forEach(cell => {            
+        engine.blocks.forEach(block => block.cells.forEach(cell => {    
+            console.log(`Highlighting cell at ${cell.row} ${cell.col}`);
             this.spans[cell.row][cell.col].className = "block";
         }));
     }
