@@ -1,0 +1,14 @@
+$color: #ccc000;
+
+body {
+    color: $color;    
+}
+ul {
+    border: 2px solid $color solid;
+    li {
+        color: #f00;
+        &.special {
+            background-color: #000;
+        }
+    }
+}

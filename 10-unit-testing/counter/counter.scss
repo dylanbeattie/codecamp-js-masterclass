@@ -1,0 +1,39 @@
+$brand-color: #609;
+
+div.counter-wrapper {
+    display: inline-grid;
+    grid-template-columns: 32px 64px 32px;
+    grid-template-rows: 32px 24px;
+    justify-items: stretch;
+    align-items: stretch;
+    grid-gap: 4px;
+    span {
+        font-family: Consolas;
+        font-weight: bold;
+        color: $brand-color;
+        font-size: 150%;
+    }
+    > * {
+        border-radius: 8px;
+    }
+}
+
+div.counter {
+    text-align: center;
+    border: 2px solid $brand-color;
+}
+
+button {
+    font-weight: bold;
+    font-size: 120%;
+    border: 0;
+    background-color: $brand-color;
+    color: #fff;
+    &#reset-button {
+        width: auto;
+        font-size: 12px;
+        font-weight: normal;
+        width: 100%;
+        grid-column-start: 2;
+    }    
+}
