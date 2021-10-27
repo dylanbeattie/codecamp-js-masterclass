@@ -48,7 +48,7 @@ rowIndex >  [ span, span, span, span ]
         // Then: highlight the cells with blocks in them
         engine.blocks.forEach(block => block.cells.forEach(cell => {    
             console.log(`Highlighting cell at ${cell.row} ${cell.col}`);
-            this.spans[cell.row][cell.col].className = "block";
+            this.spans[cell.row][cell.col].className = block.className;
         }));
     }
 }

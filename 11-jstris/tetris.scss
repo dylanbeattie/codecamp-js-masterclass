@@ -13,5 +13,11 @@ div.tetris-grid {
         &.block {
             background-color: #06f;
         }
+        &.wide-block {
+            background-color: #930;
+        }
+        &.tall-block {
+            background-color: #0c6;
+        }
     }
 }

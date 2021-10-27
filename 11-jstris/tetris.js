@@ -17,6 +17,11 @@ export default class TetrisElement extends HTMLElement {
         this.engine.addBlock();
         this.renderer.render(this.engine);
         document.addEventListener("keydown", this.handleKeydown.bind(this));
+        
+    }
+    tick() {
+        this.engine.fall();
+        return this.renderer.update(this.engine);
     }
 
     handleKeydown(event) {
@@ -29,8 +34,8 @@ export default class TetrisElement extends HTMLElement {
                 this.engine.moveRight();
                 return this.renderer.update(this.engine);
             case "Space":
-                this.engine.fall();
-                return this.renderer.update(this.engine);
+                window.setInterval(this.tick.bind(this), 50);
+                return this.tick();        
         }
     }
 }
