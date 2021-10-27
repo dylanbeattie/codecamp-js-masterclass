@@ -1,63 +1,52 @@
+import Renderer from './renderer.js';
+import CountingEngine from './engine.js';
+
 class MyCounterElement extends HTMLElement {
     constructor() {
         super();
-        this.attachShadow({ mode: 'open' });
+        this.attachShadow({ mode: 'open' });        
+        this.renderer = new Renderer(this.shadowRoot);
     }
 
     connectedCallback() {
-        this.count = parseInt(this.getAttribute("initial-value"));
-        this.initialCount = this.count;
-
-        const link = document.createElement('link');
-        link.setAttribute("rel", "stylesheet");
-        link.setAttribute("href", "counter.css");
-        link.setAttribute("type", "text/css");
-        this.shadowRoot.appendChild(link);
-        
-        let wrapper = document.createElement('div');
-        wrapper.setAttribute("class", "counter-wrapper");
-        let incrementButton = document.createElement('button');
-        incrementButton.innerHTML = '▲';
-        let decrementButton = document.createElement('button');
-        decrementButton.innerHTML = '▼';
-        this.span = document.createElement('span');
-        this.span.setAttribute("id", "counter");
-        this.span.innerHTML = this.count;
-        let counter = document.createElement('div');
-        counter.setAttribute("class", "counter");
-        counter.appendChild(this.span);
-        wrapper.appendChild(decrementButton);
-        wrapper.appendChild(counter);
-        wrapper.appendChild(incrementButton);
-        let resetButton = document.createElement('button');
-        resetButton.setAttribute('id', 'reset-button');
-        resetButton.innerHTML = 'Reset';
-        wrapper.appendChild(resetButton);
-        this.shadowRoot.appendChild(wrapper);
+        let initialValue = parseInt(this.getAttribute("initial-value"));
+        this.engine = new CountingEngine(initialValue);
+//        this.initialCount = this.count;
+        this.renderer.render(this.engine);
         document.addEventListener("keydown", this.handleKeydown.bind(this));
-        incrementButton.addEventListener("click", this.incrementButtonClick.bind(this));
-        decrementButton.addEventListener("click", this.decrementButtonClick.bind(this));
-        resetButton.addEventListener("click", this.resetButtonClick.bind(this));
+        this.renderer.incrementButton.addEventListener("click", this.incrementButtonClick.bind(this));
+        this.renderer.decrementButton.addEventListener("click", this.decrementButtonClick.bind(this));
+        this.renderer.resetButton.addEventListener("click", this.resetButtonClick.bind(this));
     }
 
     incrementButtonClick(event) {
-        this.count++;
-        this.span.innerHTML = this.count;
+        this.engine.increment();
+        this.renderer.update(this.engine);
     }
 
     decrementButtonClick(event) {
-        this.count--;
-        this.span.innerHTML = this.count;
+        this.engine.decrement();
+        this.renderer.update(this.engine);
     }
     resetButtonClick(event) {
-        this.count = this.initialCount;
-        this.span.innerHTML = this.count;
+        this.engine.reset();
+        this.renderer.update(this.engine);
     }
 
     handleKeydown(event) {
         switch (event.code) {
-            case "ArrowUp": this.count++; this.span.innerHTML = this.count; break;
-            case "ArrowDown": this.count--; this.span.innerHTML = this.count; break;
+            case "ArrowUp": 
+                this.engine.increment();
+                this.renderer.update(this.engine);
+                event.preventDefault();
+                event.stopPropagation();
+                return false;
+            case "ArrowDown":
+                this.engine.decrement();
+                this.renderer.update(this.engine);
+                event.preventDefault();
+                event.stopPropagation();
+                return false;
             default: return;
         }
     }
