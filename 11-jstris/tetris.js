@@ -1,12 +1,18 @@
-export default class TetrisElement extends HTMLElement{
-constructor(){
-    super()
+import TetrisEngine from "./engine.js";
+import Renderer from "./renderer.js";
 
-    this.attachShadow({mode: 'open'})
-}
+export default class TetrisElement extends HTMLElement {
+    constructor() {
+        super()
+        this.attachShadow({ mode: 'open' })
+    }
 
-    connectedCallback(){
-        
+    connectedCallback() {
+        let rows = this.getAttribute("rows");
+        let cols = this.getAttribute("cols");
+        this.engine = new TetrisEngine(rows,cols);
+        this.renderer = new Renderer(engine);
+        this.renderer.render();
     }
 }
 
