@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JS Modules</title>
+</head>
+<body>
+    <h1>Modules</h1>
+    <script type="module">
+        import { SayHello as GreetInEnglish } from './hello-en.js'; 
+        import { SayHello as GreetInRomanian } from './hello-ro.js'; 
+        
+        var h1en = document.createElement('h1');
+        h1en.innerText = GreetInEnglish('Everyone');       
+        document.body.appendChild(h1en);
+
+        var h1ro = document.createElement('h1');
+        h1ro.innerText = GreetInRomanian('Everyone');       
+        document.body.appendChild(h1ro);
+    </script>
+</body>
+</html>

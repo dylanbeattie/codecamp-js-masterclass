@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JS Modules</title>
+</head>
+<body>
+    <h1>Modules</h1>
+    <script type="module">
+        import * as EnglishGreetings from './hello-en.js'; 
+        import * as RomanianGreetings from './hello-ro.js'; 
+        import * as FrenchGreetings from './hello-fr.js'; 
+        
+        var h1en = document.createElement('h1');
+        h1en.innerText = EnglishGreetings.SayHello('Everyone');       
+        document.body.appendChild(h1en);
+
+        var h1ro = document.createElement('h1');
+        h1ro.innerText =  RomanianGreetings.SayHello('Everyone');       
+        document.body.appendChild(h1ro);
+
+        var h1fr = document.createElement('h1');
+        h1fr.innerText =  FrenchGreetings.SayHello();       
+        document.body.appendChild(h1fr);
+    </script>
+</body>
+</html>
