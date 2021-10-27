@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+    <my-custom-component></my-custom-component>
+    <script>
+        class MyCustomComponentElement extends HTMLElement {
+            constructor() {
+                super();
+                this.attachShadow({ mode: 'open' });
+            }
+
+            connectedCallback() {
+                let span = document.createElement('span');
+                span.setAttribute("style", "color: red; border: 1px solid red;");
+                span.innerHTML = "Look! I'm super stylish!";
+                this.shadowRoot.appendChild(span);
+
+                let span2 = document.createElement('span');
+                span2.setAttribute("style", "color: blue; border: 4px solid purple; border-radius: 8px;");
+                span2.innerHTML = "Look! I'm super stylish and purple!";
+                this.shadowRoot.appendChild(span2);
+            }
+        }
+        customElements.define("my-custom-component", MyCustomComponentElement);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <span>I'm just a regular span!</span>
+    <my-custom-component></my-custom-component>
+    <script>
+        class MyCustomComponentElement extends HTMLElement {
+            constructor() {
+                super();
+                this.attachShadow({ mode: 'open' });
+                let style = document.createElement('style');
+                style.innerHTML = `span {
+                    color: green;
+                    border: 3px solid green;
+                    border-radius: 2px;
+                    display: block;
+                }`;
+                this.shadowRoot.appendChild(style);
+
+            }
+
+            connectedCallback() {
+                let span = document.createElement('span');
+                span.innerText = "Look! I'm super stylish!";
+                this.shadowRoot.appendChild(span);
+            }
+        }
+        customElements.define("my-custom-component", MyCustomComponentElement);
+    </script>
+</body>
+
+</html>

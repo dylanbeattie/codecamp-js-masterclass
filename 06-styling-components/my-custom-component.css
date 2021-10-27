@@ -1,0 +1,6 @@
+span {
+    color: green;
+    border: 3px solid green;
+    border-radius: 2px;
+    display: block;
+}
