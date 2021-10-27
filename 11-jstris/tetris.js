@@ -11,8 +11,8 @@ export default class TetrisElement extends HTMLElement {
         let rows = this.getAttribute("rows");
         let cols = this.getAttribute("cols");
         this.engine = new TetrisEngine(rows,cols);
-        this.renderer = new Renderer(engine);
-        this.renderer.render();
+        this.renderer = new Renderer(this.shadowRoot);
+        this.renderer.render(this.engine);
     }
 }
 
